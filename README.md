@@ -210,7 +210,7 @@ docker logs hue # Can check the logs
 
 
 
-### Step 5 – Set up the Trino Cluster with Hive and Iceberg Catalogs
+### ⚡ Step 5 – Set up the Trino Cluster with Hive and Iceberg Catalogs
 
 <i>Configure Trino for distributed SQL queries with Hive and Iceberg integration.</i>
 

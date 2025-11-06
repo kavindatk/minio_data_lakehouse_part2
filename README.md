@@ -178,10 +178,10 @@ hadoop@node01:/opt/hive$ tree /opt/hive
 
 <br/><br/>
 
-Now it’s time to <b>start the services.</b>
-<br/><br/>
+Now it’s time to <b>start the services.</b>, First Navigate into the <b>Hive</b> folder
+<br/>
 
-You can use the following command to start all the containers:
+Then You can use the following command to start all the containers:
 <br/><br/>
 
 ```bash
@@ -190,7 +190,7 @@ docker compose -p hive_cluster up -d
 docker compose -p hive_cluster down -v # This for stop the cluster 
 ```
 
-<br/><br/>
+<br/>
 To check the current status of your setup, run:
 <br/><br/>
 

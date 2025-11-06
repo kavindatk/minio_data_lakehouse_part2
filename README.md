@@ -149,37 +149,43 @@ Once all configurations are complete, your final folder structure should look si
 <br/><br/>
 
 ```bash
-hadoop@node01:/opt/hive$ tree /opt/hive
-/opt/hive
-├── conf
-│   ├── core-site.xml
-│   ├── hive-site.xml
-│   └── log4j2.properties
-├── docker-compose.yml
-├── hive_home
-├── jars
-│   ├── aws-java-sdk-bundle-1.12.367.jar
-│   ├── hadoop-aws-3.3.4.jar
-│   ├── iceberg-api-1.7.0.jar
-│   ├── iceberg-aws-1.7.0.jar
-│   ├── iceberg-aws-bundle-1.7.0.jar
-│   ├── iceberg-common-1.7.0.jar
-│   ├── iceberg-core-1.7.0.jar
-│   ├── iceberg-hive-metastore-1.7.0.jar
-│   ├── iceberg-hive-runtime-1.7.0.jar
-│   ├── iceberg-orc-1.7.0
-│   ├── iceberg-orc-1.7.0.jar
-│   ├── iceberg-parquet-1.7.0.jar
-│   └── postgresql-42.7.3.jar
-├── postgres
-    ├── data  
-    └── init.sql
+hadoop@node01:/opt$ tree /opt/
+/opt/
+├── hive
+│   ├── conf
+│   │   ├── core-site.xml
+│   │   ├── hive-site.xml
+│   │   └── log4j2.properties
+│   ├── docker-compose.yml
+│   ├── hive_home
+│   ├── jars
+│   │   ├── aws-java-sdk-bundle-1.12.367.jar
+│   │   ├── hadoop-aws-3.3.4.jar
+│   │   ├── iceberg-api-1.7.0.jar
+│   │   ├── iceberg-aws-1.7.0.jar
+│   │   ├── iceberg-aws-bundle-1.7.0.jar
+│   │   ├── iceberg-common-1.7.0.jar
+│   │   ├── iceberg-core-1.7.0.jar
+│   │   ├── iceberg-hive-metastore-1.7.0.jar
+│   │   ├── iceberg-hive-runtime-1.7.0.jar
+│   │   ├── iceberg-orc-1.7.0
+│   │   ├── iceberg-orc-1.7.0.jar
+│   │   ├── iceberg-parquet-1.7.0.jar
+│   │   └── postgresql-42.7.3.jar
+│   ├── postgres
+│       ├── data  
+│       └── init.sql
+├── hue
+    ├── conf
+        └── hue.ini
 ```
 
 <br/><br/>
 
 Now it’s time to <b>start the services.</b>, First Navigate into the <b>Hive</b> folder
 <br/>
+
+[Hive Folder](https://github.com/kavindatk/minio_data_lakehouse_part2/tree/main/hive)
 
 Then You can use the following command to start all the containers:
 <br/><br/>

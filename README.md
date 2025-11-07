@@ -488,6 +488,47 @@ However, you can still use SparkSQL within HUE to get a similar experience to Hi
 Remember, Hive usually runs on top of MapReduce, Tez, or Spark execution engines — in our case, it runs on Spark.
 <br/><br/>
 
-### Step 7 – Set up DuckDB and Perform Testing
+### 🐤 Step 7 – Set up DuckDB and Perform Testing
 
 <i>Integrate DuckDB for lightweight, fast querying and verification across datasets.</i>
+<br/><br/>
+Unlike above Spark,Hive and HUE tools, <b>DuckDB</b> is lightweight and very easy to install.
+Currently, DuckDB works in <b>standalone mode</b>, And for my case I’m not using Docker for this setup.
+With just a single command, you can install DuckDB on a Linux system.
+<br/><br/>
+The following steps show how to <b>install and configure DuckDB</b>, and then <b>access data stored in MINIO.</b>
+<br/><br/>
+
+1. Install DuckDB (internet connection required)
+
+<br/><br/>
+```bash
+curl https://install.duckdb.org | sh
+```
+<br/> <br/>  
+
+2. Configure DuckDB
+   
+<br/><br/>
+```bash
+nano ~/.bashrc
+
+# Add following content
+
+#DuckDB
+export PATH='/home/hadoop/.duckdb/cli/latest':$PATH
+
+source ~/.bashrc
+```
+<br/><br/>
+
+3. Access MINIO data using DuckDB
+<br/><br/>
+
+```bash
+duckdb
+```
+
+
+   
+

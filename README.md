@@ -142,7 +142,7 @@ hue:
 ```
 <br/><br/>
 
-## 🚀 Start the Services
+### 🚀 Start the Services
 <br/><br/>
 So far, we have successfully set up <b>Hive and HUE with a PostgreSQL backend.</b>
 Once all configurations are complete, your final folder structure should look similar to this (you can verify that all necessary files and configuration folders are in place).
@@ -421,9 +421,70 @@ docker logs spark_worker_2 # Can check the logs
 Once everything is up and running correctly, you can verify the Spark cluster by accessing the following web link:
 
 ```bash
-http://<coordinator-host>:8088
+http://<master-host>:8088
 ```
-<br/><br/>
+<br/>
+Once everything is up , you can try on pyspark using following commands 
+
+```bash
+# From master 
+hadoop@node01:~$ docker exec -it spark_master /opt/spark/bin/pyspark --master spark://node01:7077
+
+Python 3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+WARNING: Using incubator modules: jdk.incubator.vector
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 4.0.0
+      /_/
+
+Using Python version 3.10.12 (main, Aug 15 2025 14:32:43)
+Spark context Web UI available at http://node01:4041
+Spark context available as 'sc' (master = spark://node01:7077, app id = app-20251107071025-0002).
+SparkSession available as 'spark'.
+
+# From Worker
+
+hadoop@node02:/opt$ docker exec -it spark_worker_1 /opt/spark/bin/pyspark --master spark://node01:7077
+
+Python 3.10.12 (main, Aug 15 2025, 14:32:43) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+WARNING: Using incubator modules: jdk.incubator.vector
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 4.0.0
+      /_/
+
+Using Python version 3.10.12 (main, Aug 15 2025 14:32:43)
+Spark context Web UI available at http://node02:4040
+Spark context available as 'sc' (master = spark://node01:7077, app id = app-20251107071157-0003).
+SparkSession available as 'spark'.
+
+```
+
+### 💻 Accessing the Cluster via HUE
+
+So far, we have successfully set up Spark, Trino, and Hive.
+Once all the services are up and running, you can access them through the HUE interface.
+
+```bash
+http://<hue-host>:8888/hue
+```
+
+When you first log in to HUE, you may see a Hive error message — this happens because the HiveServer (Thrift service) is not running.
+As mentioned earlier, we are not using Hadoop in this setup; instead, we are using MINIO as the storage backend.
+Since the HiveServer Thrift port (10000) isn’t active, HUE shows this connection error.
+
+However, you can still use SparkSQL within HUE to get a similar experience to Hive.
+Remember, Hive usually runs on top of MapReduce, Tez, or Spark execution engines — in our case, it runs on Spark.
 
 
 ### Step 7 – Set up DuckDB and Perform Testing

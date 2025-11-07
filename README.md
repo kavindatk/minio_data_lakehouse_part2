@@ -616,3 +616,67 @@ D
 D .exit
 hadoop@node01:~/duckdb_test$
 ```
+
+<br/><br/>
+
+#### 🖥️ Enabling the DuckDB GUI
+<br/><br/>
+As we saw earlier, we can access and query <b>MINIO data</b> directly using the <b>DuckDB CLI.</b>
+Now, to make the experience more user-friendly, let’s enable the <b>DuckDB GUI.</b>
+<br/>
+
+To enable the GUI, a few additional steps are required.
+The most important thing to remember is that <b>DuckDB runs locally</b> — in my setup, it’s installed on <b>VM1.</b>
+Because of this, the GUI <b>cannot be accessed remotely by default.</b>
+<br/>
+
+To access the DuckDB GUI from another machine, we can use <b>SSH tunneling.</b>
+This can be easily done using <b>PuTTY</b> by forwarding the required port from the remote server to your local system.
+Once the tunnel is established, you’ll be able to open the <b>DuckDB GUI</b> in your browser and start running queries — just like in the CLI.
+<br/><br/>
+
+```bash
+hadoop@node01:~/duckdb_test$
+hadoop@node01:~/duckdb_test$ duckdb sparkdb.db
+DuckDB v1.4.1 (Andium) b390a7c376
+Enter ".help" for usage hints.
+D INSTALL 'ui';
+D LOAD 'ui';
+D SET ui_local_port = 9099;
+D CALL start_ui_server();
+┌─────────────────────────────────────────────┐
+│                   result                    │
+│                   varchar                   │
+├─────────────────────────────────────────────┤
+│ UI server started at http://localhost:9099/ │
+└─────────────────────────────────────────────┘
+D CALL stop_ui_server();
+┌───────────────────┐
+│      result       │
+│      varchar      │
+├───────────────────┤
+│ UI server stopped │
+└───────────────────┘
+D
+D
+```
+
+<br/>
+
+```bash
+# SSH Tunnel using terminal
+ssh -L 9099:localhost:9099 <user>@<IP>
+```
+<br/>
+
+<picture>
+  <img alt="docker" src="https://github.com/kavindatk/minio_data_lakehouse_part2/blob/main/images/puttty_1.JPG" width="400" height="400">
+</picture>  
+<br/><br/>
+<picture>
+  <img alt="docker" src="https://github.com/kavindatk/minio_data_lakehouse_part2/blob/main/images/putty_2.JPG" width="400" height="400">
+</picture>  
+<br/><br/>
+<picture>
+  <img alt="docker" src="https://github.com/kavindatk/minio_data_lakehouse_part2/blob/main/images/duckdb_gui.JPG" width="800" height="600">
+</picture>  

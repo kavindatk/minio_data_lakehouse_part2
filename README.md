@@ -469,23 +469,24 @@ Spark context available as 'sc' (master = spark://node01:7077, app id = app-2025
 SparkSession available as 'spark'.
 
 ```
-
+<br/><br/>
 ### 💻 Accessing the Cluster via HUE
+<br/>
 
 So far, we have successfully set up Spark, Trino, and Hive.
 Once all the services are up and running, you can access them through the HUE interface.
-
+<br/>
 ```bash
 http://<hue-host>:8888/hue
 ```
-
+<br/>
 When you first log in to HUE, you may see a Hive error message — this happens because the HiveServer (Thrift service) is not running.
 As mentioned earlier, we are not using Hadoop in this setup; instead, we are using MINIO as the storage backend.
 Since the HiveServer Thrift port (10000) isn’t active, HUE shows this connection error.
-
+<br/><br/>
 However, you can still use SparkSQL within HUE to get a similar experience to Hive.
 Remember, Hive usually runs on top of MapReduce, Tez, or Spark execution engines — in our case, it runs on Spark.
-
+<br/><br/>
 
 ### Step 7 – Set up DuckDB and Perform Testing
 

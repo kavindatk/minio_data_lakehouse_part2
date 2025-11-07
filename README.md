@@ -213,6 +213,101 @@ docker logs hue # Can check the logs
 ### ⚡ Step 5 – Set up the Trino Cluster with Hive and Iceberg Catalogs
 
 <i>Configure Trino for distributed SQL queries with Hive and Iceberg integration.</i>
+<br/><br/>
+Now that our Hive setup is up and running (and we’ve also enabled Iceberg), it’s time to move on to the Trino cluster configuration.
+<br/><br/>
+In my setup:
+<br/><br/>
+1. <b>VM1</b> acts as the <b>Trino Coordinator</b>
+2. <b>VM2, VM3, and VM4</b> act as the <b>Worker nodes</b>
+
+
+<br/>
+
+One important point to note — I’ve configured the <b>Trino cluster</b> to use the <b>host network mode.</b>
+This allows seamless communication between all VMs without any network-related issues or Docker network limitations.
+
+<br/>
+
+#### <b>Trino Coordinator</b>
+
+<br/>
+
+```bash
+hadoop@node01:/opt$ tree trino/
+trino/
+├── data
+│   ├── etc -> /etc/trino
+│   ├── plugin -> /usr/lib/trino/plugin
+│   ├── secrets-plugin -> /usr/lib/trino/secrets-plugin
+│   └── var   
+├── docker-compose.yml
+└── etc
+    ├── catalog
+    │   ├── hive.properties
+    │   ├── iceberg.properties
+    │   └── postgresql.properties
+    ├── config.properties
+    ├── hadoop
+    ├── jvm.config
+    ├── node.properties
+    └── password.properties
+
+```
+<br/>
+
+[Trino Coordinator](https://github.com/kavindatk/minio_data_lakehouse_part2/tree/main/trino_coordinator)
+
+<br/>
+
+#### <b>Trino Worker</b>
+
+<br/>
+
+```bash
+hadoop@node02:/opt$ tree trino/
+trino/
+├── data
+├── docker-compose.yml
+└── etc
+    ├── catalog
+    │   ├── hive.properties
+    │   ├── iceberg.properties
+    │   └── postgresql.properties
+    ├── config.properties
+    ├── hadoop
+    ├── jvm.config
+    └── node.properties
+
+```
+<br/>
+
+[Trino Worker](https://github.com/kavindatk/minio_data_lakehouse_part2/tree/main/trino_worker)
+
+<br/>
+
+Once the configuration is complete, we’ll start the Trino services on all nodes and verify that the cluster is connected and running correctly.
+
+Then You can use the following command to start all the containers:
+<br/>
+
+```bash
+docker compose -p trino_cluster up -d
+
+docker compose -p trino_cluster down -v # This for stop the cluster 
+```
+
+<br/>
+To check the current status of your setup, run:
+<br/><br/>
+
+```
+docker ps
+
+docker logs trino_service # Can check the logs
+```
+<br/><br/>
+
 
 
 

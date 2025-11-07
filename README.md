@@ -528,7 +528,91 @@ source ~/.bashrc
 ```bash
 duckdb
 ```
+<br/>
+
+Now our <b>DuckDB setup</b> is up and running.
+
+To connect DuckDB with <b>MINIO</b>, we need the ```bash httpfs ``` extension (for accessing S3-compatible storage) and the ```bash ui ``` module (for the graphical interface).
+
+<br/>
+
+We can create the MINIO connection in DuckDB using the ```bash secret ``` option.
+
+This connection can be configured as either <b>temporary or persistent</b>, depending on your requirement.
+
+<br/>
+
+The following sample code shows how to <b>read data from MINIO</b> that was previously created using <b>Spark</b>.
+
+In the next article, I’ll demonstrate a <b>complete end-to-end data loading task using DuckDB.</b>
+
+<br/>
+
+```bash
+CREATE OR REPLACE SECRET minio_secret (
+    TYPE s3,
+    KEY_ID 'minioadmin',
+    SECRET 'minioadmin',
+    ENDPOINT 'minoproxy:9999',
+    USE_SSL false,
+    URL_STYLE "path"
+);
 
 
-   
+CREATE PERSISTENT SECRET minio_secret (
+    TYPE s3,
+    KEY_ID 'minioadmin',
+    SECRET 'minioadmin',
+    ENDPOINT 'minoproxy:9999',
+    USE_SSL false,
+    URL_STYLE "path"
+);
 
+```
+<br/>
+
+```bash
+.open /home/hadoop/duckdb_test/sparkdb.db
+
+INSTALL httpfs;
+LOAD httpfs;
+
+-- MinIO S3 configuration
+SET s3_endpoint='minoproxy:9999';
+SET s3_access_key_id='minioadmin';
+SET s3_secret_access_key='minioadmin';
+SET s3_region='us-east-1';
+SET s3_url_style='path';
+SET s3_use_ssl=false;
+
+-- Create a view from the Hive table's data files
+CREATE VIEW sparkdb_data AS
+SELECT * FROM read_parquet('s3://warehouse/tablespace/external_tables/hivedb.db/sparkdb/*.parquet');
+
+.quit
+```
+
+<br/>
+
+```bash
+hadoop@node01:~/duckdb_test$ duckdb sparkdb.db
+DuckDB v1.4.1 (Andium) b390a7c376
+Enter ".help" for usage hints.
+D show tables;
+┌──────────────┐
+│     name     │
+│   varchar    │
+├──────────────┤
+│ sparkdb_data │
+└──────────────┘
+D select * from sparkdb_data;
+┌───────┬─────────┐
+│  id   │  naem   │
+│ int32 │ varchar │
+├───────┼─────────┤
+│   1   │ Kavinda │
+└───────┴─────────┘
+D
+D .exit
+hadoop@node01:~/duckdb_test$
+```

@@ -308,7 +308,12 @@ docker logs trino_service # Can check the logs
 ```
 <br/><br/>
 
+Once everything is up and running correctly, you can verify the Trino cluster by accessing the following web link:
 
+```bash
+http://<coordinator-host>:8080/ui/
+```
+<br/><br/>
 
 
 ### Step 6 – Set up the Spark Cluster with Spark Thrift (Spark SQL) Access

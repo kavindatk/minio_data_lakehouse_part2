@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  trino:
+    image: trinodb/trino:latest
+    platform: linux/amd64
+    container_name: trino_service
+    network_mode: "host"
+    volumes:
+      - ./data:/opt/trino/data
+      - ./etc/:/etc/trino/

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  spark-worker-1:
+    image: spark:latest
+    platform: linux/amd64
+    container_name: spark_worker_1
+    network_mode: "host"
+    environment:
+      - SPARK_CONF_DIR=/opt/spark/conf
+      - SPARK_MASTER=spark://node01:7077
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin
+    volumes:
+      - ./conf:/opt/spark/conf
+      - ./jars/aws-java-sdk-bundle-1.12.367.jar:/opt/spark/jars/aws-java-sdk-bundle-1.12.367.jar
+      - ./jars/iceberg-spark-runtime-4.0_2.13-1.10.0.jar:/opt/spark/jars/iceberg-spark-runtime-4.0_2.13-1.10.0.jar
+      - ./jars/iceberg-aws-bundle-1.10.0.jar:/opt/spark/jars/iceberg-aws-bundle-1.10.0.jar
+      - ./jars/hadoop-aws-3.3.4.jar:/opt/spark/jars/hadoop-aws-3.3.4.jar
+    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://node01:7077"]
+
+  spark-worker-2:
+    image: spark:latest
+    platform: linux/amd64
+    container_name: spark_worker_2
+    network_mode: "host"
+    environment:
+      - SPARK_CONF_DIR=/opt/spark/conf
+      - SPARK_MASTER=spark://node01:7077
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin
+    volumes:
+      - ./conf:/opt/spark/conf
+      - ./jars/aws-java-sdk-bundle-1.12.367.jar:/opt/spark/jars/aws-java-sdk-bundle-1.12.367.jar
+      - ./jars/iceberg-spark-runtime-4.0_2.13-1.10.0.jar:/opt/spark/jars/iceberg-spark-runtime-4.0_2.13-1.10.0.jar
+      - ./jars/iceberg-aws-bundle-1.10.0.jar:/opt/spark/jars/iceberg-aws-bundle-1.10.0.jar
+      - ./jars/hadoop-aws-3.3.4.jar:/opt/spark/jars/hadoop-aws-3.3.4.jar
+    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://node01:7077"]
+

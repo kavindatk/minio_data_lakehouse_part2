@@ -497,19 +497,23 @@ Currently, DuckDB works in <b>standalone mode</b>, And for my case I’m not usi
 With just a single command, you can install DuckDB on a Linux system.
 <br/><br/>
 The following steps show how to <b>install and configure DuckDB</b>, and then <b>access data stored in MINIO.</b>
-<br/><br/>
+<br/>
 
 1. Install DuckDB (internet connection required)
 
-<br/><br/>
+<br/>
+
 ```bash
 curl https://install.duckdb.org | sh
 ```
-<br/> <br/>  
+
+<br/> 
+
 
 2. Configure DuckDB
    
-<br/><br/>
+<br/>
+
 ```bash
 nano ~/.bashrc
 
@@ -520,14 +524,18 @@ export PATH='/home/hadoop/.duckdb/cli/latest':$PATH
 
 source ~/.bashrc
 ```
-<br/><br/>
+
+<br/>
+
 
 3. Access MINIO data using DuckDB
-<br/><br/>
+<br/>
+
 
 ```bash
 duckdb
 ```
+
 <br/>
 
 Now our <b>DuckDB setup</b> is up and running.

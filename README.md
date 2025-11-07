@@ -316,10 +316,114 @@ http://<coordinator-host>:8080/ui/
 <br/><br/>
 
 
-### Step 6 – Set up the Spark Cluster with Spark Thrift (Spark SQL) Access
+### 🔥 Step 6 – Set up the Spark Cluster with Spark Thrift (Spark SQL) Access
 
 <i>Enable Spark for analytics and interactive SQL queries.</i>
 
+<br/>
+
+Now it’s time for the big one — <b>Apache Spark.</b>
+<br/><br/>
+In this setup, I’ll configure <b>VM1</b> as the <b>Spark Master</b> and also as the <b>Spark Thrift Server.</b>
+<br/><br/>
+The other nodes — <b>VM2, VM3, and VM4</b> — will be configured as <b>Spark Workers.</b>
+<br/>
+<br/><br/>
+It’s important to note that <b>worker nodes don’t require Thrift Server configurations;</b> the <b>Master node</b> will handle all coordination and job execution.
+<br/><br/>
+In this setup, each of the three worker VMs will host <b>two worker</b> processes, resulting in a <b>final configuration of one Spark Master with six workers.</b>
+<br/><br/>
+
+One important point to note — I’ve configured the <b>Spark cluster</b> to use the <b>host network mode.</b>
+This allows seamless communication between all VMs without any network-related issues or Docker network limitations.
+
+<br/>
+
+#### <b>Spark Master and Spark Thrift Server</b>
+
+<br/>
+
+```bash
+hadoop@node01:~$ tree /opt/spark/
+/opt/spark/
+├── conf
+│   ├── core-site.xml
+│   ├── hive-site.xml
+│   ├── log4j2.properties
+│   ├── spark-defaults.conf
+│   └── workers
+├── docker-compose.yml
+└── jars
+    ├── aws-java-sdk-bundle-1.12.367.jar
+    ├── hadoop-aws-3.3.4.jar
+    ├── iceberg-aws-bundle-1.10.0.jar
+    ├── iceberg-spark-runtime-4.0_2.13-1.10.0.jar
+    └── postgresql-42.7.3.jar
+
+```
+<br/>
+
+[Spark Master and Spark Thrift Server](https://github.com/kavindatk/minio_data_lakehouse_part2/tree/main/spark_master)
+
+<br/>
+
+#### <b>Spark Worker</b>
+
+<br/>
+
+```bash
+hadoop@node02:~$ tree /opt/spark/
+/opt/spark/
+├── conf
+│   ├── log4j2.properties
+│   ├── spark-defaults.conf
+│   └── workers
+├── docker-compose.yml
+└── jars
+    ├── aws-java-sdk-bundle-1.12.367.jar
+    ├── hadoop-aws-3.3.4.jar
+    ├── iceberg-aws-bundle-1.10.0.jar
+    ├── iceberg-spark-runtime-4.0_2.13-1.10.0.jar
+    └── postgresql-42.7.3.jar
+
+```
+<br/>
+
+[Spark Worker](https://github.com/kavindatk/minio_data_lakehouse_part2/tree/main/spark_worker)
+
+<br/>
+
+Once the configuration is complete, we’ll start the Spark services on all nodes and verify that the cluster is connected and running correctly.
+
+Then You can use the following command to start all the containers:
+<br/>
+
+```bash
+docker compose -p spark_cluster up -d
+
+docker compose -p spark_cluster down -v # This for stop the cluster 
+```
+
+<br/>
+To check the current status of your setup, run:
+<br/><br/>
+
+```
+docker ps
+
+docker logs spark_master # Can check the logs
+docker logs spark_thrift # Can check the logs
+docker logs spark_worker_1 # Can check the logs
+docker logs spark_worker_2 # Can check the logs
+```
+<br/><br/>
+
+Once everything is up and running correctly, you can verify the Spark cluster by accessing the following web link:
+
+```bash
+http://<coordinator-host>:8088
+```
+<br/><br/>
 
 
 ### Step 7 – Set up DuckDB and Perform Testing

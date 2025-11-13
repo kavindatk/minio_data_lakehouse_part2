@@ -1,5 +1,12 @@
 # Setup an Iceberg, Spark, HUE, Trino, and DuckDB in MINIO Cluster
 
+<br/><br/>
+<p align="center">
+<picture>
+  <img alt="docker" src="https://github.com/kavindatk/e2e_modern_datalake_minio_p1/blob/main/images/final_setup.JPG" width="800" height="300">
+</picture>
+</p>
+
 ## A Containerized, Enterprise-Ready On-Premises Data Lakehouse
 
 ## 🧩 Configuration Overview

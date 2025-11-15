@@ -1,0 +1,29 @@
+<allocations>
+  <!-- Default pool -->
+  <pool name="default">
+    <schedulingMode>FAIR</schedulingMode>
+    <weight>1</weight>
+    <minShare>2</minShare>
+  </pool>
+
+  <!-- High priority pool -->
+  <pool name="high">
+    <schedulingMode>FAIR</schedulingMode>
+    <weight>3</weight>
+    <minShare>4</minShare>
+  </pool>
+
+  <!-- Medium priority pool -->
+  <pool name="medium">
+    <schedulingMode>FAIR</schedulingMode>
+    <weight>2</weight>
+    <minShare>2</minShare>
+  </pool>
+
+  <!-- Low priority pool -->
+  <pool name="low">
+    <schedulingMode>FAIR</schedulingMode>
+    <weight>1</weight>
+    <minShare>1</minShare>
+  </pool>
+</allocations>
